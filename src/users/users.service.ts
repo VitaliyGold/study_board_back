@@ -1,13 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserViewDto } from './dto/create-user-view.dto';
 import { CreateUserDto } from './dto/create-user-model.dto';
 import { User } from './user.model';
-import { Student } from 'src/students/student.model';
 import { Sequelize } from 'sequelize-typescript';
-import { ListOfRepository } from './helpers/listOfRepository';
 import { StudentsService } from 'src/students/students.service';
-import { studentData } from 'src/consts/user';
+import * as bcrypt from 'bcryptjs'
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -18,21 +16,27 @@ export class UsersService {
         private sequelize: Sequelize
     ) {}
 
-    async CreateUser(dto: CreateUserViewDto) {
+    async createUser(dto: CreateUserViewDto) {
 
+        const { email, password } = dto.user_data
         const id = uuidv4();
         const user_type = dto.user_type;
+
         let user = null
+
+        const candidate = await this.getUserByEmail(email)
+        if (candidate) {
+            throw new HttpException('Такой пользователь уже существует', HttpStatus.BAD_REQUEST)
+        }
+
+        const hashPassword = await bcrypt.hash(password, 7)
 
         try {
             await this.sequelize.transaction(async t => {
-                const transactionHost = { transaction: t };
-    
-                const { email, password } = dto.user_data
-    
+                const transactionHost = { transaction: t }
                 const new_user_data: CreateUserDto = {
                     email, 
-                    password,
+                    password: hashPassword,
                     user_id: id,
                     role: user_type
                 }
@@ -46,10 +50,14 @@ export class UsersService {
                 user = await this.studentsService.create(user_data, transactionHost)
             })
         } catch(e) {
-            console.log(e)
-            return
+            throw new HttpException('Ошибка при создании пользователя', HttpStatus.BAD_REQUEST)
         }
 
+        return user
+    }
+
+    async getUserByEmail(email: string) {
+        const user = await this.userRepository.findOne({ where: {email} })
         return user
     }
 

@@ -15,11 +15,11 @@ export class StudentsService {
         return user
     }
 
-    async GetStudent(student_id: string) {
+    async getStudent(student_id: string) {
         return this.studentsRepository.findByPk(student_id)
     }
 
-    async GetAllStudents() {
+    async getAllStudents() {
         return this.studentsRepository.findAll()
     }
 }
