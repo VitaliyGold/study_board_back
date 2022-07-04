@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { ViewUserDto } from './dto/view-user-model.dto';
+import { CreateUserViewDto } from './dto/create-user-view.dto';
 import { User } from './user.model';
 import { UsersService } from './users.service';
 
@@ -11,8 +11,9 @@ export class UsersController {
 
     @ApiOperation({ summary: 'Создание одного пользователя' })
     @ApiResponse({ status: 200, type: User })
-    @Post('createSingleUser')
-    create(@Body() userDto: ViewUserDto) {
+    
+    @Post('createUser')
+    create(@Body() userDto: CreateUserViewDto) {
         return this.userService.CreateUser(userDto)
     }
 
