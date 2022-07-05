@@ -14,10 +14,10 @@ import { UsersModule } from 'src/users/users.module';
         expiresIn: '24h'
       }
     }),
-    UsersModule
+    forwardRef(() => UsersModule)
   ],
   exports: [
-    forwardRef(() => AuthService),
+    AuthService,
     JwtModule
   ]
 })

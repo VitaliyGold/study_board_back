@@ -18,6 +18,6 @@ export class CreateUserViewDto {
 
     @ApiProperty({ example: example_student_data, description: 'данные для создания пользователя' })
 
-    user_data: studentData
+    user_data: studentData | adminData
 
 }

@@ -24,10 +24,17 @@ export class AuthService {
     }
 
     private async validateUser(authDto: AuthDto) {
+        console.log(authDto)
+        if (!authDto.email || !authDto.password) {
+            throw new UnauthorizedException({ message: 'Вы ввели пустые значения' })
+        }
         const user = await this.userService.getUserByEmail(authDto.email)
+        if ( !user ) {
+            throw new HttpException('Такого пользователя не существует', HttpStatus.BAD_REQUEST)
+        }
         const passwordEquals = await bcrypt.compare(authDto.password, user.password)
-        if (!user || !passwordEquals) {
-            throw new UnauthorizedException({ message: 'Такого пользователя не существует' })
+        if (!passwordEquals) {
+            throw new HttpException('Неправильный пароль', HttpStatus.BAD_REQUEST)
         }
         return this.generateToken(user)
 

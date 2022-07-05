@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { UsersModule } from "./users/users.module";
-import { StudentsModule } from "./students/students.module";
+import { StudentsModule } from "./users/students/students.module";
 import { ConfigModule } from "@nestjs/config";
 import { User } from "./users/user.model";
-import { Student } from "./students/student.model";
+import { Student } from "./users/students/student.model";
 import { AuthModule } from './auth/auth.module';
 
 @Module({

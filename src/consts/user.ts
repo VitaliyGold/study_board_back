@@ -1,6 +1,7 @@
 type adminData = {
     email: string,
     password: string,
+    fio: string,
 }
 
 type studentData = {
