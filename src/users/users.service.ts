@@ -4,7 +4,7 @@ import { CreateUserViewDto } from './dto/create-user-view.dto';
 import { CreateUserDto } from './dto/create-user-model.dto';
 import { User } from './user.model';
 import { Sequelize } from 'sequelize-typescript';
-import { StudentsService } from 'src/students/students.service';
+import { StudentsService } from 'src/users/students/students.service';
 import * as bcrypt from 'bcryptjs'
 
 const { v4: uuidv4 } = require('uuid');
