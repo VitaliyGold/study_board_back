@@ -6,14 +6,14 @@ import { StudentsService } from './students.service';
 
 
 @ApiTags('Студенты')
-@Controller('students')
+@Controller()
 export class StudentsController {
     constructor(private StudentsService: StudentsService) {}
 
     @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получение всех пользователей' })
     @ApiResponse({ status: 200, type: [Student] })
-    @Get('allStudents')
+    @Get('getList')
     getAll() {
         return this.StudentsService.getAllStudents()
     }

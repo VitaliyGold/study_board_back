@@ -10,6 +10,7 @@ import { AdminsService } from './admins/admins.service';
 import { adminData, studentData } from 'src/consts/user';
 import { StudentDto } from './students/dto/student-model.dto';
 import { AdminDto } from './admins/dto/admin-model.dto';
+import { TeachersService } from './teachers/teachers.service';
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -18,7 +19,8 @@ export class UsersService {
     constructor(@InjectModel (User) private userRepository: typeof User, 
         private studentsService: StudentsService,
         private sequelize: Sequelize,
-        private adminsService: AdminsService
+        private adminsService: AdminsService,
+        private teachersServive: TeachersService
     ) {}
 
     async createUser(dto: CreateUserViewDto) {
@@ -51,23 +53,29 @@ export class UsersService {
                 // вот тут пользователь сохранился в табличку user
 
                 let user_data
-
-
                 // нужно нормально разобраться с типами и структурой
                 switch(user_type) {
                     case 1:
                         user_data = { ...dto.user_data, user_id: id }
                         user = await this.adminsService.create(user_data, transactionHost)
-                    case 2: 
+                        break;
+                    case 2:
+                        console.log(222)
                         user_data = { ...dto.user_data, user_id: id }
                         user = await this.studentsService.create(user_data, transactionHost)
+                        break
+                    case 3: 
+                        user_data = { ...dto.user_data, user_id: id }
+                        user = await this.teachersServive.create(user_data, transactionHost)
+                        break
                 }
 
             })
         } catch(e) {
+            console.log(e)
             throw new HttpException('Ошибка при создании пользователя', HttpStatus.BAD_REQUEST)
         }
-
+        console.log(user)
         return user
     }
 

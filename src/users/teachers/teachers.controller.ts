@@ -5,22 +5,22 @@ import { TeachersService } from './teachers.service';
 
 
 @ApiTags('Преподаватели')
-@Controller('teachers')
+@Controller()
 export class TeachersController {
     constructor(private TeachersService: TeachersService) {}
 
     @ApiOperation({ summary: 'Получение всех учителей' })
     @ApiResponse({ status: 200, type: [Teacher] })
     @Get('getList')
-    getAll() {
+    getList() {
         return this.TeachersService.getList()
     }
 
     @ApiOperation({ summary: 'Получение учителя по id' })
     @ApiResponse({ status: 200, type: [Teacher] })
     @Get(':id')
-    getStudent(@Param('id') id: string) {
-        return this.TeachersService.getForId(id)
+    getForId(@Param('id') student_id: string) {
+        return this.TeachersService.getForId(student_id)
     }
 
 }

@@ -9,16 +9,23 @@ import { AuthModule } from 'src/auth/auth.module';
 import { TeachersModule } from './teachers/teachers.module';
 import { Admin } from './admins/admin.model';
 import { AdminsModule } from './admins/admins.module';
+import { RouterModule } from '@nestjs/core';
+import { TeachersService } from './teachers/teachers.service';
+import { StudentsService } from './students/students.service';
+import { AdminsService } from './admins/admins.service';
+import { Teacher } from './teachers/teacher.model';
+import { routes } from 'src/routes';
 
 @Module({
   controllers: [ UsersController ],
-  providers: [ UsersService ],
+  providers: [ UsersService, TeachersService, StudentsService, AdminsService ],
   imports: [
-    SequelizeModule.forFeature([ User, Student, Admin ]),
-    AdminsModule,
-    StudentsModule,
-    TeachersModule,
+    SequelizeModule.forFeature([ User, Student, Admin, Teacher ]),
     forwardRef(() => AuthModule),
+    RouterModule.register(routes),
+    StudentsModule,
+    AdminsModule,
+    TeachersModule
   ],
   exports: [ 
     UsersService

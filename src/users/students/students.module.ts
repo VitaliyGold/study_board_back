@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Student } from './student.model';
 import { StudentsService } from './students.service';
@@ -10,7 +10,7 @@ import { AuthModule } from 'src/auth/auth.module';
   providers: [StudentsService],
   imports: [
     SequelizeModule.forFeature([Student]),
-    AuthModule
+    forwardRef(() => AuthModule),
   ],
   exports: [StudentsService]
 })

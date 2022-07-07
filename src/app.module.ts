@@ -1,7 +1,5 @@
 import { Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { UsersModule } from "./users/users.module";
-import { StudentsModule } from "./users/students/students.module";
 import { ConfigModule } from "@nestjs/config";
 import { User } from "./users/user.model";
 import { Student } from "./users/students/student.model";
@@ -9,6 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { Role } from "./roles/role.model";
 import { UniverseModule } from './universe/universe.module';
+import { Subject } from "./universe/subjects/subject.model";
+import { Teacher } from "./users/teachers/teacher.model";
+import { RouterModule } from "@nestjs/core";
+import { routes } from "./routes";
 
 @Module({
     controllers: [],
@@ -24,12 +26,10 @@ import { UniverseModule } from './universe/universe.module';
             username: process.env.POSTGRESS_USER,
             password: process.env.PORSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User, Student, Role],
+            models: [User, Student, Role, Subject, Teacher],
             autoLoadModels: true,
-            synchronize: true
+            synchronize: true,
         }),
-        UsersModule,
-        StudentsModule,
         AuthModule,
         RolesModule,
         UniverseModule

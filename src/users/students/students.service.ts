@@ -11,7 +11,6 @@ export class StudentsService {
     async create(dto: StudentDto, transactionHost) {
 
         const user = await this.studentsRepository.create(dto, transactionHost)
-
         return user
     }
 
