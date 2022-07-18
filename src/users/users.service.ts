@@ -7,9 +7,6 @@ import { Sequelize } from 'sequelize-typescript';
 import { StudentsService } from 'src/users/students/students.service';
 import * as bcrypt from 'bcryptjs'
 import { AdminsService } from './admins/admins.service';
-import { adminData, studentData } from 'src/consts/user';
-import { StudentDto } from './students/dto/student-model.dto';
-import { AdminDto } from './admins/dto/admin-model.dto';
 import { TeachersService } from './teachers/teachers.service';
 
 const { v4: uuidv4 } = require('uuid');
@@ -26,7 +23,6 @@ export class UsersService {
     async createUser(dto: CreateUserViewDto) {
 
         const { email, password } = dto.user_data
-        const id = uuidv4();
         const user_type = dto.user_type;
 
         let user = null
@@ -42,30 +38,27 @@ export class UsersService {
             await this.sequelize.transaction(async t => {
                 const transactionHost = { transaction: t }
                 const user_auth_data: CreateUserDto = {
-                    email, 
+                    email,
                     password: hashPassword,
-                    user_id: id,
-                    role: user_type
-                }
+                    role: dto.user_type
+                }   
     
-                await this.userRepository.create(user_auth_data, transactionHost)
-
-                // вот тут пользователь сохранился в табличку user
+                const { user_id } = await this.userRepository.create(user_auth_data, transactionHost)
 
                 let user_data
                 // нужно нормально разобраться с типами и структурой
                 switch(user_type) {
                     case 1:
-                        user_data = { ...dto.user_data, user_id: id }
+                        user_data = { ...dto.user_data, user_id }
                         user = await this.adminsService.create(user_data, transactionHost)
                         break;
                     case 2:
-                        console.log(222)
-                        user_data = { ...dto.user_data, user_id: id }
+                        console.log(124)
+                        user_data = { ...dto.user_data, user_id }
                         user = await this.studentsService.create(user_data, transactionHost)
                         break
                     case 3: 
-                        user_data = { ...dto.user_data, user_id: id }
+                        user_data = { ...dto.user_data, user_id }
                         user = await this.teachersServive.create(user_data, transactionHost)
                         break
                 }
@@ -75,7 +68,6 @@ export class UsersService {
             console.log(e)
             throw new HttpException('Ошибка при создании пользователя', HttpStatus.BAD_REQUEST)
         }
-        console.log(user)
         return user
     }
 
@@ -84,7 +76,7 @@ export class UsersService {
         return user
     }
 
-    async getAllUsers() {
+    async getList() {
         return this.userRepository.findAll()
     }
 }

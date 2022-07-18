@@ -2,18 +2,18 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Column, DataType, Model, Table } from "sequelize-typescript";
 import { UUIDV4 } from "sequelize";
 
-interface UserCreationAttrs {
+interface ScheduleCreationAttrs {
     password: string,
     email: string,
     role: number
 }
 
 @Table
-export class User extends Model<User, UserCreationAttrs> {
+export class Schedule extends Model<Schedule, ScheduleCreationAttrs> {
 
     @ApiProperty({ example: '1be84976-385c-43af-93e5-2014997b49c4', description: 'Уникальный идентификатор пользователя в системе' })
     @Column({ type: DataType.UUID, unique: true, primaryKey: true, defaultValue: UUIDV4 })
-    user_id: string;
+    schedule_id: string;
 
     @ApiProperty({ example: '1234567asf', description: 'Пароль' })
     @Column({ type: DataType.STRING, allowNull: false })

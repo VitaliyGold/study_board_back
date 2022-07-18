@@ -4,7 +4,7 @@ import { Column, DataType, Model, Table } from "sequelize-typescript";
 interface AdminCreationAttrs {
     user_id: string,
     fio: string,
-    register_parent_id: string
+    universe: string
 }
 
 @Table
@@ -20,10 +20,10 @@ export class Admin extends Model<Admin, AdminCreationAttrs> {
 
     fio: string;
 
-    @ApiProperty({ example: 'Прикладная математика и информатика', description: 'id зарегистрировавшего пользователя' })
+    @ApiProperty({ example: 'Тгу державина', description: 'Название института, к которому привязан данный админ' })
     @Column({ type: DataType.STRING, allowNull: false })
 
-    register_parent_id: string;
+    universe: string;
     
 
 }

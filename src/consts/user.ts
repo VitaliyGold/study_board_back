@@ -1,19 +1,26 @@
-type adminData = {
-    email: string,
-    password: string,
-    fio: string,
+interface userData {
+    email: string;
+    password: string;
+    fio: string;
 }
 
-type studentData = {
-    email: string,
-    password: string,
-    student_fio: string;
-    study_field: string;
-    student_group: string;
-    student_course: number
+interface adminData extends userData {
+    universe: string
+}
+
+interface studentData extends userData {
+    study_field: string; 
+    group_number: string;
+    course_number: number
+}
+
+interface teacherData extends userData {
+    specialisation: string;
+    department: string
 }
 
 export {
     adminData,
-    studentData
+    studentData,
+    teacherData
 }

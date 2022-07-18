@@ -9,8 +9,6 @@ import { Role } from "./roles/role.model";
 import { UniverseModule } from './universe/universe.module';
 import { Subject } from "./universe/subjects/subject.model";
 import { Teacher } from "./users/teachers/teacher.model";
-import { RouterModule } from "@nestjs/core";
-import { routes } from "./routes";
 
 @Module({
     controllers: [],

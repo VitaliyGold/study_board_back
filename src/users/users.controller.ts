@@ -19,9 +19,9 @@ export class UsersController {
 
     @ApiOperation({ summary: 'Получение всех пользователей' })
     @ApiResponse({ status: 200, type: [User] })
-    @Get('getAllUsers')
+    @Get('getList')
     getAll() {
-        return this.userService.getAllUsers()
+        return this.userService.getList()
     }
 
 }

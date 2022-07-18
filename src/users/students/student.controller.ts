@@ -14,16 +14,16 @@ export class StudentsController {
     @ApiOperation({ summary: 'Получение всех пользователей' })
     @ApiResponse({ status: 200, type: [Student] })
     @Get('getList')
-    getAll() {
-        return this.StudentsService.getAllStudents()
+    getList() {
+        return this.StudentsService.getList()
     }
 
     @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получение студента по id' })
     @ApiResponse({ status: 200, type: [Student] })
     @Get(':id')
-    getStudent(@Param('id') id: string) {
-        return this.StudentsService.getStudent(id)
+    getForId(@Param('id') id: string) {
+        return this.StudentsService.getForId(id)
     }
 
 }

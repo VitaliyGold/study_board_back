@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { adminData, studentData } from "./../../consts/user";
+import { adminData, studentData, teacherData } from "./../../consts/user";
 
 
 const example_student_data = {
@@ -13,11 +13,11 @@ const example_student_data = {
 
 export class CreateUserViewDto {
 
-    @ApiProperty({ enum: [1, 2, 3], description: 'тип пользователя' })
+    @ApiProperty({ enum: [1, 2, 3], description: 'тип пользователя (1 - админ, 2 - студент, 3 - преподаватель' })
     readonly user_type: number;
 
     @ApiProperty({ example: example_student_data, description: 'данные для создания пользователя' })
 
-    user_data: studentData | adminData
+    user_data: studentData | adminData | teacherData
 
 }

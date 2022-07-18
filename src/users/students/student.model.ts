@@ -3,10 +3,10 @@ import { Column, DataType, Model, Table } from "sequelize-typescript";
 
 interface StudentCreationAttrs {
     user_id: string,
-    student_fio: string,
-    study_field: string,
-    student_group: string,
-    student_course: number
+    fio: string,
+    study_field: string; 
+    group_number: string;
+    course_number: number
 }
 
 @Table
@@ -20,21 +20,21 @@ export class Student extends Model<Student, StudentCreationAttrs> {
     @ApiProperty({ example: 'Иванов Иван Иванович', description: 'ФИО студента' })
     @Column({ type: DataType.STRING, allowNull: false })
 
-    student_fio: string;
+    fio: string;
 
     @ApiProperty({ example: 'Прикладная математика и информатика', description: 'Направление обучения' })
     @Column({ type: DataType.STRING, allowNull: false })
 
     study_field: string;
     
-    @ApiProperty({ example: '31102', description: 'Номер группы студента' })
+    @ApiProperty({ example: '31.05.02', description: 'Номер группы студента' })
     @Column({ type: DataType.STRING, allowNull: false })
 
-    student_group: string;
+    group_number: string;
 
     @ApiProperty({ example: 4, description: 'Курс студента' })
     @Column({ type: DataType.INTEGER, allowNull: false })
 
-    student_course: number
+    course_number: number
 
 }

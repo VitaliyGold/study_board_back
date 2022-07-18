@@ -9,16 +9,15 @@ export class StudentsService {
     constructor(@InjectModel (Student) private studentsRepository: typeof Student) {}
 
     async create(dto: StudentDto, transactionHost) {
-
         const user = await this.studentsRepository.create(dto, transactionHost)
         return user
     }
 
-    async getStudent(student_id: string) {
+    async getForId(student_id: string) {
         return this.studentsRepository.findByPk(student_id)
     }
 
-    async getAllStudents() {
+    async getList() {
         return this.studentsRepository.findAll()
     }
 }

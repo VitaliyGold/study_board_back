@@ -1,7 +1,7 @@
 export class StudentDto {
     user_id: string
-    student_fio: string
-    study_field: string
-    student_group: string
-    student_course: number
+    fio: string
+    study_field: string; 
+    group_number: string;
+    course_number: number
 }

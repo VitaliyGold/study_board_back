@@ -20,7 +20,7 @@ export class AdminsConroller {
 
     @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Получение админа по id' })
-    @ApiResponse({ status: 200, type: [Admin] })
+    @ApiResponse({ status: 200, type: Admin })
     @Get(':id')
     getStudent(@Param('id') id: string) {
         return this.AdminsService.getForId(id)

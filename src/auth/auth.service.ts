@@ -24,7 +24,6 @@ export class AuthService {
     }
 
     private async validateUser(authDto: AuthDto) {
-        console.log(authDto)
         if (!authDto.email || !authDto.password) {
             throw new UnauthorizedException({ message: 'Вы ввели пустые значения' })
         }
